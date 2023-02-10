@@ -1,0 +1,1 @@
+chown -h vincent:staff _hello u+x 101-symbolic_link_permissions
