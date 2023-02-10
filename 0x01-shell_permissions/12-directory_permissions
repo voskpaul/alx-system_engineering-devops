@@ -1,3 +1,4 @@
 #!/bin/bash
-mkdir _m 751 my_dir
-mkdir -m 751 mydir
+mkdir -m 751 my_dir
+
+echo mkdir -m 751 my_dir
