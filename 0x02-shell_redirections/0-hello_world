@@ -1,4 +1,4 @@
 #!/bin/bash
-echo 'hello, world'
-
-
+echo Hello, World" >> 0-hello_world   
+echo echo Hello, World" clear
+echo "Hello, World"
