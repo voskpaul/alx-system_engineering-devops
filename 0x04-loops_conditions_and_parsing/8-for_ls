@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#using ls as a variable stuff
+
+file=$(ls)
+for i in $file
+do
+    echo "$i" | cut -d'-' -f 2
+done
