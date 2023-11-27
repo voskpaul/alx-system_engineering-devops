@@ -1,16 +1,5 @@
-# Setting up my client config file
-include stdlib
+#!/usr/bin/env bash
+# Using Puppet to change our server configuration files
+# Configure SSH to use the private key ~/.ssh/school for authentication
+echo -e "file { '/etc/ssh/ssh_config':\n  ensure  => present,\n  content => \"    IdentityFile ~/.ssh/school\n    PasswordAuthentication no\"\n}" > 100-puppet_ssh_config.pp
 
-file_line { 'Turn off passwd auth':
-  ensure => present,
-  path   => '/etc/ssh/ssh_config',
-  line   => '    PasswordAuthentication no',
-  replace => true,
-}
-
-file_line { 'Delare identity file':
-  ensure => present,
-  path   => '/etc/ssh/ssh_config',
-  line   => '     IdentityFile ~/.ssh/school',
-  replace => true,
-}
