@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
-# Client configuration file
-echo -e "Host *\n    IdentityFile ~/.ssh/school\n    PasswordAuthentication no" > ~/.ssh/config
-
+# ssh config file
+Host *
+      PasswordAuthentication no
+      IdentifyFile ~/.ssh/school
