@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Update the package list and install Nginx
+
+# Configure your Nginx server so that /redirect_me is redirecting to another page
+REDIRECT="\\\\n\tlocation /redirect_me {\n\t\t return 301 https://www.youtube.com;\n\t}"
