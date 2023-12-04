@@ -18,8 +18,8 @@ frontend haproxy_balancer
 
 backend webservers
         balance roundrobin
-        server 320441-web-01 54.209.92.33:80 check
-        server 320441-web-02 35.153.52.144:80 check
+        server 256734-web-01 54.209.92.33:80 check
+        server 256734-web-02 35.153.52.144:80 check
 ' >> /etc/haproxy/haproxy.cfg
 
 # restart for changes to appear
