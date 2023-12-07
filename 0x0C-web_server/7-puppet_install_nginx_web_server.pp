@@ -1,42 +1,25 @@
-# This Puppet manifest installs and configures Nginx web server on an Ubuntu machine.
+# Setup New Ubuntu server with nginx
 
-# Install Nginx package
+exec { 'update system':
+        command => '/usr/bin/apt-get update',
+}
+
 package { 'nginx':
-  ensure => installed,
+	ensure => 'installed',
+	require => Exec['update system']
 }
 
-# Define Nginx configuration file
-file { '/etc/nginx/sites-available/default':
-  ensure  => file,
-  content => "
-server {
-    listen 80;
-    server_name _;
-
-    location / {
-        return 301 http://\$host/redirect_me;
-    }
-
-    location /redirect_me {
-        return 200 'Hello World!';
-    }
-}
-",
-  notify  => Service['nginx'],
+file {'/var/www/html/index.html':
+	content => 'Hello World!'
 }
 
-# Create symbolic link to enable the default site
-file { '/etc/nginx/sites-enabled/000-default':
-  ensure => link,
-  target => '/etc/nginx/sites-available/default',
-  notify => Service['nginx'],
+exec {'redirect_me':
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://www.github.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+	provider => 'shell'
 }
 
-# Ensure Nginx service is running and enabled
-service { 'nginx':
-  ensure    => running,
-  enable    => true,
-  hasstatus => true,
-  hasrestart => true,
+service {'nginx':
+	ensure => running,
+	require => Package['nginx']
 }
 
