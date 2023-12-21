@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# runs whoami command under the user passed as an argument
+# sudo is used to switch between users, -u to indicate the user
+sudo -u "$1" whoami
+
