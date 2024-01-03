@@ -44,4 +44,3 @@ if __name__ == "__main__":
     # export the data to json format
     with open("{}.json".format(user_id), "w") as file:
         json.dump(json_dict, file)
-

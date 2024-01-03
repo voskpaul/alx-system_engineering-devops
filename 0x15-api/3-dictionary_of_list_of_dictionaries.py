@@ -54,4 +54,3 @@ if __name__ == "__main__":
     # export the data to json format
     with open("todo_all_employees.json", "w") as file:
         json.dump(all_tasks, file)
-
