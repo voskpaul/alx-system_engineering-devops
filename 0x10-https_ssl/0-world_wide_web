@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
-# print domains and subdomains
-
-print_domain_subdomain () {
-    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
+# A script that looks up DNS records of a passed domain
+lookup (){
+    dig +noall +answer "$1" | 
+        awk '
+        {split($1,a,"."); 
+        printf "The subdomain %s is a %s record and points to %s\n", a[1], $4, $5 }
+        '
 }
 
-if [ "$#" -eq 2 ]
+
+
+if [ "$#" -eq 1 ];
 then
-    print_domain_subdomain "$2.$1" "$2"
-else
-    print_domain_subdomain "www.$1" "www"
-    print_domain_subdomain "lb-01.$1" "lb-01"
-    print_domain_subdomain "web-01.$1" "web-01"
-    print_domain_subdomain "web-02.$1" "web-02"
+    lookup "www.$1"
+    lookup "lb-01.$1"
+    lookup "web-01.$1"
+    lookup "web-02.$1"
+elif [ "$#" -eq 2 ];
+then
+    lookup "$2.$1"
 fi
