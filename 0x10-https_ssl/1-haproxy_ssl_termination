@@ -39,7 +39,7 @@ defaults
 frontend www-http
 	bind *:80
 	# Listen on 443 for ssl connections
-    bind *:443 ssl crt /etc/ssl/www.paulnjeru.tech/www.paulnjeru.tech.pem
+    bind *:443 ssl crt /etc/ssl/www.muindetuva.tech/www.muindetuva.tech.pem
 
 	# Test URI to see if it's a letsencrypt request
 	acl letsencrypt-acl path_beg /.well-known/acme-challenge/
@@ -52,5 +52,5 @@ backend letsencrypt-backend
 
 backend myservers
 	balance roundrobin
-	server 256734-web-01 54.209.92.33:80 check
-	server 256734-web-02 3.85.16.136:80 check
+	server 182-web-01 34.75.214.109:80 check
+	server 182-web-02 35.190.185.74:80 check

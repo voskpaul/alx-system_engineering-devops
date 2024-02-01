@@ -1,21 +1,18 @@
 #!/usr/bin/env bash
-#fizzbuzz stuf
+# Displays "Holberton School" 10 times.
 
-count=1
-while [ $count -ne 101 ]
+for i in {1..100}
 do
-    if [ $((count % 15)) -eq 0 ]
-    then
-	echo "FizzBuzz"
-    elif [ $((count % 3)) -eq 0 ]
-    then
-	echo "Fizz"
-    elif [ $((count % 5)) -eq 0 ]
-    then
-        echo "Buzz"
-    else
-	echo $count
-    fi
-    ((count++))
+	if (( i % 3 == 0 )) && (( i % 5 == 0 ))
+	then
+		echo "FizzBuzz"
+	elif (( i % 3 == 0 ))
+	then
+		echo "Fizz"
+	elif (( i % 5 == 0 ))
+	then
+		echo "Buzz"
+	else
+		echo "$i"
+	fi
 done
-

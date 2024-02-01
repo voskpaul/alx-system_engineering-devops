@@ -1,8 +1,9 @@
-# creates a file in /tmp
+# Puppet code to create a file in /tmp
 
-file { '/tmp/school':
-  content =>'I love Puppet',
-  mode    => '0744',
+file { '/tmp/holberton':
+  ensure  => 'file',
   owner   => 'www-data',
   group   => 'www-data',
+  mode    => '0744',
+  content => 'I love Puppet'
 }

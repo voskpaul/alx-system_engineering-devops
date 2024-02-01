@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-# make nginx to run as nginx user
-sed -i "s/# user www-data/user nginx/" /etc/nginx/nginx.conf
-sed -i "s/\b80\b/8080/g" /etc/nginx/sites-available/default
-chmod 644 /etc/nginx/nginx.conf
+# Runs nginx using the nginx user
 pkill apache2
-sudo -u nginx service nginx start
-
+sed -i "s/80/8080/g" /etc/nginx/sites-available/default
+chown -R nginx:nginx /etc/nginx/ /var/log/nginx/ 
+chmod 777 /etc/nginx/nginx.conf
+sudo -u nginx service nginx restart

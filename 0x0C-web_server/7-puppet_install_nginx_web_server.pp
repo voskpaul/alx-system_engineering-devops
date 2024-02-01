@@ -1,25 +1,21 @@
-# Setup New Ubuntu server with nginx
-
-exec { 'update system':
-        command => '/usr/bin/apt-get update',
-}
+# Puppet Manifest to setup a nginx server
 
 package { 'nginx':
-	ensure => 'installed',
-	require => Exec['update system']
+  ensure => installed,
 }
 
-file {'/var/www/html/index.html':
-	content => 'Hello World!'
+file_line { 'server_config':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_server;',
+  line   => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;',
 }
 
-exec {'redirect_me':
-	command => 'sed -i "24i\	rewrite ^/redirect_me https://www.github.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
-	provider => 'shell'
+file { '/var/www/html/index.html':
+  content => 'Holberton School',
 }
 
-service {'nginx':
-	ensure => running,
-	require => Package['nginx']
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
 }
-

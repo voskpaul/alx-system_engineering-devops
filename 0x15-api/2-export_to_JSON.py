@@ -1,46 +1,32 @@
 #!/usr/bin/python3
-"""export data to json format"""
-
-import csv
-from urllib import request
-from sys import argv
-from requests import *
+'''
+Module contains python script for making an api call and writing response to
+csv file
+'''
 import json
+import requests
+import sys
 
 
-if __name__ == "__main__":
-    """export data in the CSV format"""
-    # Retrieves the user ID from the first command-line argument
-    user_id = argv[1]
+if __name__ == '__main__':
 
-    # send a request to retrieve user id
-    url = "https://jsonplaceholder.typicode.com/users/{}".format(user_id)
+    user_id = sys.argv[1]
+    url = 'https://jsonplaceholder.typicode.com/users/{}/'.format(user_id)
+    todos_url = url + 'todos'
+    user = requests.get(url).json()
+    todos = requests.get(todos_url).json()
 
-    # store the response from the api in response variable
-    response = get(url)
+    todo_list = []
+    for todo in todos:
+        new_dict = {}
+        new_dict['task'] = todo.get('title')
+        new_dict['completed'] = todo.get('completed')
+        new_dict['username'] = user.get('username')
+        todo_list.append(new_dict)
 
-    # extract users username from response
-    username = response.json().get("username")
+    todo_dict = {user.get('id'): todo_list}
 
-    # send a request to retrieve user's todo list
-    url = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(user_id)
+    file_name = '{}.json'.format(user.get('id'))
 
-    # store the response from the api in response variable
-    response = get(url)
-
-    # extract todo list from response
-    todo_list = response.json()
-
-    # create json dictionary
-    json_dict = {
-        user_id: [
-            {
-                "task": task.get("title"),
-                "completed": task.get("completed"),
-                "username": username
-            } for task in todo_list
-        ]
-    }
-    # export the data to json format
-    with open("{}.json".format(user_id), "w") as file:
-        json.dump(json_dict, file)
+    with open(file_name, mode='w') as outfile:
+        json.dump(todo_dict, outfile)

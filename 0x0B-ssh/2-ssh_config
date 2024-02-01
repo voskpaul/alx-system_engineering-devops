@@ -1,4 +1,3 @@
-# ssh config file
-Host *
-      PasswordAuthentication no
-      IdentifyFile ~/.ssh/school
+Host 34.75.214.109
+    IdentityFile ~/.ssh/holberton
+    IdentitiesOnly yes

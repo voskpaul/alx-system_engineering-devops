@@ -1,35 +1,36 @@
 #!/usr/bin/python3
-"""
-recursive function that queries the Reddit API and returns
- a list containing the titles of all hot articles for a given subreddit.
-"""
-
+'''
+Module contains a function that makes an api call
+'''
 import requests
 
 
-def recurse(subreddit, hot_list=[], after="", count=0):
-    """Returns a list of titles of all hot posts on a given subreddit."""
-    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
-    headers = {
-        "User-Agent": "linux:0x16.api.advanced:v1.0.0 (by /u/bdov_)"
-    }
-    params = {
-        "after": after,
-        "count": count,
-        "limit": 100
-    }
-    response = requests.get(url, headers=headers, params=params,
-                            allow_redirects=False)
-    if response.status_code == 404:
+def recurse(subreddit, hot_list=[], after=None):
+    '''
+    Makes an api call to get the top ten hot posts in a given subreddit
+    Args:
+        subreddit(str) - The name of the subreddit to check
+    '''
+    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
+
+    data = requests.get(url, headers={'User-agent': 'my-bot'},
+                        params={'after': after}, allow_redirects=False)
+
+    if data.status_code == 200:
+        after = data.json().get('data').get('after')
+        post_list = data.json().get('data').get('children')
+
+        for post in post_list:
+            hot_list.append(post.get("data").get("title"))
+
+        if after is None:
+            # If there is no new page
+            if len(hot_list) == 0:
+                return None
+
+            return hot_list
+        else:
+            # If there is another page
+            return recurse(subreddit, hot_list, after)
+    else:
         return None
-
-    results = response.json().get("data")
-    after = results.get("after")
-    count += results.get("dist")
-    for c in results.get("children"):
-        hot_list.append(c.get("data").get("title"))
-
-    if after is not None:
-        return recurse(subreddit, hot_list, after, count)
-    return hot_list
-

@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-#using ls as a variable stuff
+# Displays "Holberton School" 10 times.
 
-file=$(ls)
-for i in $file
+for file in *
 do
-    echo "$i" | cut -d'-' -f 2
+	echo "$file" | cut -d "-" -f 2
 done

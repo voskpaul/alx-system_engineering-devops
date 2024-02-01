@@ -1,10 +1,26 @@
-Configuration management In this project, I started working with Puppet as a configuration management tool. I practiced writing Puppet manifest files to create a file, install a package, and execute a command.
+## 0x0A-configuration_management
+Learning configuration management using puppet
 
-Tasks 📃 0. Create a file
+### 0-create_a_file.pp
+Using Puppet, create a file in `/tmp`.
 
-0-create_a_file.pp: Puppet manifest file that creates a file school in the /tmp directory. File permissions: 0744. File group: www-data. File owner: www-data. File content: I love Puppet.
+Requirements:
+* File path is `/tmp/holberton`
+* File permission is `0744`
+* File owner is `www-data`
+* File group is `www-data`
+* File contains `I love Puppet`
 
-Install a package
-1-install_a_package.pp: Puppet manifest file that install flask from pip3. 2. Execute a command
+### 1-install_a_package.pp
+Using Puppet, install puppet-lint.
 
-2-execute_a_command.pp: Puppet manifest file that kills the process killmenow.
+Requirements:
+* Install `puppet-lint`
+* Version must be `2.1.1`
+
+### 2-execute_a_command.pp
+Using Puppet, create a manifest that kills a process named `killmenow`.
+
+Requirements:
+* Must use the `exec` Puppet resource
+* Must use `pkill`

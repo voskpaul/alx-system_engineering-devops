@@ -1,28 +1,12 @@
 #!/usr/bin/env bash
-# configuring web-01 to have an HTTP header
+# Configures a new server to return a custom header
 
-# updaing packages
-sudo apt-get update
-sudo apt-get install -y nginx
+sudo apt-get -y update
+sudo apt-get -y install nginx
 
-# creating an index page
-echo "Hello World!" | sudo tee /var/www/html/index/html
+str="\\\tadd_header X-Served-By $HOSTNAME;"
 
-# performing a redirection
-new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/voskpaul permanent;"
+sudo sed -i "36i $str" /etc/nginx/sites-available/default
 
-sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
-
-# creating a custom error page
-
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
-
-# custom HTTP response header
-
-sudo sed -i "server_name _;/a add_header X-serverd-By $HOSTNAME;" /etc/nginx/sites-enabled/default
-
-# Test for syntax error
-sudo nginx -t 
-
-# Restart nginx
+# Restart nginx so that changes can reflect
 sudo service nginx restart
