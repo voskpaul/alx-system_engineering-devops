@@ -25,3 +25,4 @@ def top_ten(subreddit):
             count = count + 1
     else:
         print("None")
+
